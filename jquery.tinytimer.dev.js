@@ -1,6 +1,6 @@
 /*!
  * tinyTimer jQuery plugin
- * version 0.1.1
+ * version 0.1.2
  *
  * Copyright (c) 2013 Michal Wojciechowski (odyniec.net)
  *
