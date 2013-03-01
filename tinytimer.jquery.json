@@ -1,8 +1,9 @@
 {
     "name": "tinytimer",
     "title": "TinyTimer",
-    "version": "0.1.0",
-    "description": "TinyTimer",
+    "version": "0.1.1",
+    "description": "TinyTimer is a very simple plugin that lets you create a countdown (or
+countup) timer on a web page.",
     "keywords": [ "timer", "countdown", "clock" ],
     "author": {
         "name": "Michał Wojciechowski",
@@ -10,14 +11,14 @@
         "url": "http://odyniec.net/"
     },
     "licenses": [
-		{
-			"type": "GPL-2.0",
-			"url": "http://opensource.org/licenses/GPL-2.0"
+        {
+            "type": "GPL-2.0",
+            "url": "http://opensource.org/licenses/GPL-2.0"
         },
         {
-			"type": "MIT",
-			"url": "http://opensource.org/licenses/MIT"
-		}
+            "type": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
     ],
     "dependencies": {
         "jquery": ">=1.7"
