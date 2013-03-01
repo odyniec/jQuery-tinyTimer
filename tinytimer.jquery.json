@@ -2,8 +2,7 @@
     "name": "tinytimer",
     "title": "TinyTimer",
     "version": "0.1.1",
-    "description": "TinyTimer is a very simple plugin that lets you create a countdown (or
-countup) timer on a web page.",
+    "description": "TinyTimer is a very simple plugin that lets you create a countdown (or countup) timer on a web page.",
     "keywords": [ "timer", "countdown", "clock" ],
     "author": {
         "name": "Michał Wojciechowski",
