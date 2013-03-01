@@ -1,6 +1,6 @@
 /*!
  * tinyTimer jQuery plugin
- * version 0.1.2
+ * version 0.1.3
  *
  * Copyright (c) 2013 Michal Wojciechowski (odyniec.net)
  *
@@ -13,20 +13,20 @@
         var tick, tt = this, elem = (tt.options = options).element, ref = new Date(options.from || options.to).getTime(), dir = !!options.from || -1, M = Math, doNothing = function() {};
         tt.interval = setInterval(tick = function() {
             if (!tt.paused) {
-                var sec = M.round((Date.now() - ref) * dir / 1e3), cur = {
+                var sec = M.round((Date.now() - ref) * dir / 1e3), val = {
                     S: sec,
                     s: sec % 60,
                     M: M.floor(sec /= 60),
                     H: M.floor(sec /= 60),
                     D: M.floor(sec /= 24)
                 };
-                cur.m = cur.M % 60, cur.h = cur.H % 24, cur.d = cur.D, cur.text = (options.format || "%-H{:}%0m:%0s").replace(/%(-?)(0?)([dhms])(\s*)(?:\{(.+?)\})?/gi, options.replacer || function(match, omit, zero, part, space, forms) {
-                    var v = cur[part], out = (v > 9 ? "" : zero) + v + space;
+                val.m = val.M % 60, val.h = val.H % 24, val.d = val.D, val.text = (options.format || "%-H{:}%0m:%0s").replace(/%(-?)(0?)([dhms])(\s*)(?:\{(.+?)\})?/gi, options.replacer || function(match, omit, zero, part, space, forms) {
+                    var v = val[part], out = (v > 9 ? "" : zero) + v + space;
                     return forms && ((forms = forms.split("|"))[2] = forms[2] || (forms[1] = forms[1] || forms[0]), 
                     out += forms[+(1 != v) + (1 != v && (2 > v % 10 || v % 10 > 4) || v > 10 && 20 > v)]), 
                     !v && omit ? "" : out;
-                }), elem ? $(elem).html(cur.text) : elem = tt, (options.onTick || doNothing).call(elem, tt.cur = cur), 
-                0 > dir && 0 >= sec && (clearInterval(tt.interval), (options.onEnd || doNothing).call(elem, cur));
+                }), elem ? $(elem).html(val.text) : elem = tt, (options.onTick || doNothing).call(elem, tt.val = val), 
+                0 > dir && 0 >= sec && (clearInterval(tt.interval), (options.onEnd || doNothing).call(elem, val));
             }
         }, 1e3), tick(), tt.pause = tt.stop = function() {
             tt.paused = Date.now();
