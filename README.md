@@ -34,6 +34,35 @@ var d = new Date('January 1, 2013');
 $('#timer').tinyTimer({ from: d, format: '%d' });
 ```
 
+Options
+-------
+
+- `format`
+
+  The format used to display the date/time. See [Time Format](#time-format) for
+  details.
+
+- `from`
+
+  Date/time to count (up) from. Can be a JavaScript Date object or a string
+  ([IETF-compliant RFC 2822
+  timestamp](http://tools.ietf.org/html/rfc2822#page-14)).
+
+- `to`
+
+  Date/time to count (down) to.
+
+- `onTick`
+
+  Callback function to be invoked on every tick (every second). See
+  [Callback Functions](#callback-functions) for details.
+
+- `onEnd`
+
+  Callback function to be invoked when the countdown is over. See
+  [Callback Functions](#callback-functions) for details.
+
+<a id="time-format"></a>
 Time Format
 -----------
 
@@ -71,13 +100,45 @@ A few examples:
 The default format is `%-H{:}%0m:%0s`, which is the total number of hours (not
 displayed if zero), then minutes and seconds, separated by colons.
 
+<a id="callback-functions"></a>
+Callback Functions
+------------------
+
+The `onTick` and `onEnd` callback functions take one argument, which is an
+object that represents the current value of the timer. This object has the
+following properties:
+
+- `s` - seconds
+- `m` - minutes
+- `h` - hours
+- `d` - days
+- `S` - total seconds
+- `M` - total minutes
+- `H` - total hours
+- `D` - total days (same as `d`)
+- `text` - textual representation of the current time (formatted according to
+  the `format` option)
+
+Here's an example of a timer that counts from the time that the page is loaded
+and uses the `onTick` callback function to display an alert every minute:
+
+```javascript
+$('#timer').tinyTimer({
+	from: Date.now(),
+	onTick: function (val) {
+		if (val.m > 0 && val.s == 0)
+			alert('You decided to stay on this site for another minute! Yay!');
+	}
+});
+```
+
 Using with Moment.js
 --------------------
 
 TinyTimer can be used with the great [Moment.js](http://momentjs.com/) library,
-which makes date manipulation much easier than with plain `Date` objects. You
-just need to convert the moment object to `Date` using its `toDate` method
-before passing it as `to` or `from`:
+which makes date manipulation much easier than with plain Date objects. You just
+need to convert the moment object to `Date` using its `toDate` method before
+passing it as `to` or `from`:
 
 ```javascript
 // 30-minute countdown
