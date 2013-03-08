@@ -1,6 +1,6 @@
 /*!
  * tinyTimer jQuery plugin
- * version 0.1.3
+ * version 0.1.4
  *
  * Copyright (c) 2013 Michal Wojciechowski (odyniec.net)
  *
@@ -39,7 +39,7 @@ $.tinyTimer = function (options) {
         if (tt.paused) return;
 
         /* Calculate the number of seconds from/to the reference time */
-        var sec = M.round((Date.now() - ref) * dir / 1000);
+        var sec = M.max(M.round((Date.now() - ref) * dir / 1000), 0);
 
         var val = {
             S: sec,                     /* Total number of seconds */
@@ -56,34 +56,31 @@ $.tinyTimer = function (options) {
         val.text = (options.format || '%-H{:}%0m:%0s').replace(
             /%(-?)(0?)([dhms])(\s*)(?:\{(.+?)\})?/ig,
             options.replacer || function (match, omit, zero, part, space, forms) {
-                var
-                    /* The value of the selected part */
-                    v = val[part],
+                /* The value of the selected part */
+                var v = val[part];
 
-                    /*
-                     * Initialize the output text with the value (and optionally
-                     * a leading zero)
-                     */
-                    out = (v > 9 ? '' : zero) + v + space;
-
-                if (forms) {
-                    /*
-                     * 'day'      -> [ 'day', 'day', 'day' ]
-                     * 'day|days' -> [ 'day', 'days', 'days' ]
-                     */
-                    (forms = forms.split('|'))[2] =
-                        forms[2] || (forms[1] = forms[1] || forms[0]);
-
-                    /* Add the appropriate form */
-                    out += forms[+(v != 1) +
-                        (v != 1 && (v%10 < 2 || v%10 > 4) || (v > 10 && v < 20))];
-                }
+                /*
+                 * 'day'      -> [ 'day', 'day', 'day' ]
+                 * 'day|days' -> [ 'day', 'days', 'days' ]
+                 */
+                (forms = (forms||'').split('|'))[2] =
+                    forms[2] || (forms[1] = forms[1] || forms[0]);
 
                 /* 
                  * Return the output text, or an empty string if the value is
                  * zero and isn't supposed to be shown
                  */
-                return !v && omit ? '' : out;
+                return !v && omit ? '' :
+                    /*
+                     * Initialize the output text with the value (and optionally
+                     * a leading zero)
+                     */
+                    (v > 9 ? '' : zero) + v + space +
+                    
+                    /* Add the appropriate form */
+                    forms[+(v != 1) +
+                        (v != 1 && (v%10 < 2 || v%10 > 4) ||
+                            (v > 10 && v < 20))];
             });
 
         /* 
@@ -97,7 +94,7 @@ $.tinyTimer = function (options) {
         (options.onTick || doNothing).call(elem, tt.val = val);
 
         /* Did we just count down to zero? */
-        if (dir < 0 && sec <= 0) {
+        if (dir < 0 && !sec) {
             /* No more ticking */
             clearInterval(tt.interval);
             /* Invoke the onEnd callback (if defined) */
