@@ -77,8 +77,8 @@ formatting character:
 
 If the format character is preceded by `0` (e.g., `%0m`), then single-digit
 numbers will be displayed with a leading zero (e.g., `04:20` instead of `4:20`).
-If it is preceded by `-` (e.g., `%-h`), then the value won't be displayed at all
-if its value is zero. The two modifiers can be combined (e.g., `%-0h`).
+If it is preceded by `-` (e.g., `%-h`), then the number won't be displayed if it
+is zero. The two modifiers can be combined (e.g., `%-0h`).
 
 The above format characters can also be used in uppercase form, in which case
 they represent _total_ quantities. For instance, if the current time is 2 days
