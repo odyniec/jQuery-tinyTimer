@@ -111,6 +111,11 @@ $.tinyTimer = function (options) {
         tt.paused = Date.now();
     };
 
+    /* reset the timer to another date while it is running */
+    tt.resetFrom = function (newDate) {
+      ref = newDate;
+    }
+
     tt.resume = function () {
         ref -= (tt.paused - Date.now()) * dir;
         tt.paused = 0;

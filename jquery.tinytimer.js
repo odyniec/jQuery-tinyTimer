@@ -33,6 +33,8 @@
             ref -= (tt.paused - Date.now()) * dir, tt.paused = 0;
         }, tt.start = function() {
             tt.paused = 0;
+        }, tt.resetFrom = function(newDate) {
+            ref = newDate;
         };
     }, $.fn.tinyTimer = function(options) {
         return this.each(function() {
